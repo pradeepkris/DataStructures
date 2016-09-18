@@ -25,6 +25,22 @@ class LinkedList(object):
         new_node.next_node = self.head
         self.head = new_node
 
+    # Insert Node at begining, taking O(1) to add node
+    def insert_middle(self, data, before_data, after_data):
+        curr_node, new_node = self.head, Node(data)
+
+        # find the node with before data
+        while(curr_node.next_node):
+            nxt_2_curr_node = curr_node.next_node
+
+            # next node with after data, insert in middle
+            if curr_node.data == before_data and nxt_2_curr_node.data == after_data:
+                curr_node.next_node, new_node.next_node = new_node, nxt_2_curr_node
+                break
+            else:
+                curr_node = curr_node.next_node
+
+
     # Insert Node at end
     def insert(self, data):
         new_node = Node(data)
@@ -54,5 +70,7 @@ lst.insert(10)
 lst.insert(20)
 lst.insert(30)
 lst.insert(5)
+lst.insert_middle(15, 10, 20)
+lst.insert_middle(25, 20, 30)
 lst.insert_begin(2)
 lst.print_list()
