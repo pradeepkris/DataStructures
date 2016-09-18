@@ -1,35 +1,32 @@
+#############################
+# NODE
+#############################
 class Node(object):
 
     def __init__(self, data=None, next_node=None):
         self.data = data
         self.next_node = next_node
 
-    def get_data(self):
-        return self.data
-
-    def get_next(self):
-        return self.next_node
-
-    def set_next(self, new_next):
-        self.next_node = new_next
-
+#############################
+# LINKED LIST
+#############################
 class LinkedList(object):
 
     def __init__(self, head_node=None):
-        self.head = head_node
-        self.size = 1
+        self.head, self.size = head_node, 1
+
 
     # Insert Node at begining, taking O(1) to add node
     def insert_begin(self, data):
-        new_node = Node(data)
-        new_node.next_node = self.head
+        new_node, new_node.next_node = Node(data), self.head
         self.head = new_node
 
-    # Insert Node at begining, taking O(1) to add node
+
+    # Insert Node based on a given position
     def insert_middle(self, data, before_data, after_data):
         curr_node, new_node = self.head, Node(data)
 
-        # find the node with before data
+        # find the node with before data, worst case O(n)
         while(curr_node.next_node):
             nxt_2_curr_node = curr_node.next_node
 
@@ -55,22 +52,25 @@ class LinkedList(object):
             curr_node.next_node = new_node
 
 
+    # Print Linked List, can be done with __str__ method also
     def print_list(self):
         curr_node, out_text = self.head, ''
         while(curr_node):
             out_text += str(curr_node.data) + ' --> '
             curr_node = curr_node.next_node
-
         out_text += '*'
         print out_text
 
 
+#############################
+# USAGE
+#############################
 lst = LinkedList()
-lst.insert(10)
-lst.insert(20)
-lst.insert(30)
-lst.insert(5)
-lst.insert_middle(15, 10, 20)
-lst.insert_middle(25, 20, 30)
-lst.insert_begin(2)
+lst.insert(10)                  # 10 --> *
+lst.insert(20)                  # 10 --> 20 --> *
+lst.insert(30)                  # 10 --> 20 --> 30 --> *
+lst.insert(500)                 # 10 --> 20 --> 30 --> 500 --> *
+lst.insert_middle(15, 10, 20)   # 10 --> 15 --> 20 --> 30 --> 500 --> *
+lst.insert_middle(25, 20, 30)   # 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
+lst.insert_begin(2)             # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
 lst.print_list()
