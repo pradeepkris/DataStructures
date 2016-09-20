@@ -51,6 +51,27 @@ class LinkedList(object):
                 curr_node = curr_node.next_node
             curr_node.next_node = new_node
 
+    # Delete by Node
+    def delete_by_Node(self, Node):
+        prev_node = None
+        curr_node = self.head
+
+        found = False
+        while (found is True):
+            if curr_node == Node:
+                found = True
+            elif (curr_node is None):
+                print 'Node is not present'
+                break
+            else:
+                prev_node = curr_node
+                curr_node = curr_node.next_node
+
+        if prev_node is None:
+            self.head = curr_node.next_node
+        else:
+            prev_node.next_node = curr_node.next_node
+
 
     # Print Linked List, can be done with __str__ method also
     def print_list(self):
@@ -74,3 +95,5 @@ lst.insert_middle(15, 10, 20)   # 10 --> 15 --> 20 --> 30 --> 500 --> *
 lst.insert_middle(25, 20, 30)   # 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
 lst.insert_begin(2)             # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
 lst.print_list()
+
+n = Node(-7)
