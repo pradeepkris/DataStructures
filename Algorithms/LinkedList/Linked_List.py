@@ -61,11 +61,11 @@ class LinkedList(object):
 
         found = False
         while (found is False):
-            if curr_node.data == data:
-                found = True
-            elif (curr_node is None):
+            if (curr_node is None):
                 print 'Node is not present'
-                break
+                return
+            elif curr_node.data == data:
+                found = True
             else:
                 prev_node = curr_node
                 curr_node = curr_node.next_node
@@ -104,4 +104,5 @@ if __name__ == '__main__':
     print '-- Delete --'
     lst.insert_begin(10)
     lst.delete(10)
+    lst.delete(11111)
     # lst.print_list()
