@@ -20,6 +20,7 @@ class LinkedList(object):
     def insert_begin(self, data):
         new_node, new_node.next_node = Node(data), self.head
         self.head = new_node
+        self.print_list()
 
 
     # Insert Node based on a given position
@@ -36,6 +37,7 @@ class LinkedList(object):
                 break
             else:
                 curr_node = curr_node.next_node
+        self.print_list()
 
 
     # Insert Node at end
@@ -50,15 +52,16 @@ class LinkedList(object):
             while (curr_node.next_node):
                 curr_node = curr_node.next_node
             curr_node.next_node = new_node
+        self.print_list()
 
     # Delete by Node
-    def delete_by_Node(self, Node):
+    def delete(self, data):
         prev_node = None
         curr_node = self.head
 
         found = False
-        while (found is True):
-            if curr_node == Node:
+        while (found is False):
+            if curr_node.data == data:
                 found = True
             elif (curr_node is None):
                 print 'Node is not present'
@@ -71,7 +74,7 @@ class LinkedList(object):
             self.head = curr_node.next_node
         else:
             prev_node.next_node = curr_node.next_node
-
+        self.print_list()
 
     # Print Linked List, can be done with __str__ method also
     def print_list(self):
@@ -88,6 +91,7 @@ class LinkedList(object):
 #############################
 if __name__ == '__main__':
     lst = LinkedList()
+    print '-- Insert --'
     lst.insert(10)                  # 10 --> *
     lst.insert(20)                  # 10 --> 20 --> *
     lst.insert(30)                  # 10 --> 20 --> 30 --> *
@@ -95,6 +99,9 @@ if __name__ == '__main__':
     lst.insert_middle(15, 10, 20)   # 10 --> 15 --> 20 --> 30 --> 500 --> *
     lst.insert_middle(25, 20, 30)   # 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
     lst.insert_begin(2)             # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
-    lst.print_list()
+    lst.insert_begin(100)
 
-    n = Node(-7)
+    print '-- Delete --'
+    lst.insert_begin(10)
+    lst.delete(10)
+    # lst.print_list()
