@@ -1,11 +1,8 @@
-#############################
-# NODE
-#############################
-class Node(object):
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-    def __init__(self, data=None, next_node=None):
-        self.data = data
-        self.next_node = next_node
+from Node import Node as Nd
 
 #############################
 # LINKED LIST
@@ -18,14 +15,14 @@ class LinkedList(object):
 
     # Insert Node at begining, taking O(1) to add node
     def insert_begin(self, data):
-        new_node, new_node.next_node = Node(data), self.head
+        new_node, new_node.next_node = Nd.Node(data), self.head
         self.head = new_node
         self.print_list()
 
 
     # Insert Node based on a given position
     def insert_middle(self, data, before_data, after_data):
-        curr_node, new_node = self.head, Node(data)
+        curr_node, new_node = self.head, Nd.Node(data)
 
         # find the node with before data, worst case O(n)
         while(curr_node.next_node):
@@ -42,7 +39,7 @@ class LinkedList(object):
 
     # Insert Node at end
     def insert(self, data):
-        new_node = Node(data)
+        new_node = Nd.Node(data)
 
         if self.head is None:
             self.head = new_node
