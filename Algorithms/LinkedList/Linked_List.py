@@ -75,7 +75,7 @@ class LinkedList(object):
 
     # Print Linked List, can be done with __str__ method also
     def print_list(self):
-        curr_node, out_text = self.head, ''
+        curr_node, out_text = self.head, 'Head --> '
         while(curr_node):
             out_text += str(curr_node.data) + ' --> '
             curr_node = curr_node.next_node
@@ -86,14 +86,15 @@ class LinkedList(object):
 #############################
 # USAGE
 #############################
-lst = LinkedList()
-lst.insert(10)                  # 10 --> *
-lst.insert(20)                  # 10 --> 20 --> *
-lst.insert(30)                  # 10 --> 20 --> 30 --> *
-lst.insert(500)                 # 10 --> 20 --> 30 --> 500 --> *
-lst.insert_middle(15, 10, 20)   # 10 --> 15 --> 20 --> 30 --> 500 --> *
-lst.insert_middle(25, 20, 30)   # 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
-lst.insert_begin(2)             # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
-lst.print_list()
+if __name__ == '__main__':
+    lst = LinkedList()
+    lst.insert(10)                  # 10 --> *
+    lst.insert(20)                  # 10 --> 20 --> *
+    lst.insert(30)                  # 10 --> 20 --> 30 --> *
+    lst.insert(500)                 # 10 --> 20 --> 30 --> 500 --> *
+    lst.insert_middle(15, 10, 20)   # 10 --> 15 --> 20 --> 30 --> 500 --> *
+    lst.insert_middle(25, 20, 30)   # 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
+    lst.insert_begin(2)             # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
+    lst.print_list()
 
-n = Node(-7)
+    n = Node(-7)
