@@ -19,6 +19,11 @@ class LinkedList(object):
         self.head = new_node
         self.print_list()
 
+    def insert_begin_byNode(self, Nd):
+        new_node, new_node.next_node = Nd, self.head
+        self.head = new_node
+        self.print_list()
+
 
     # Insert Node based on a given position
     def insert_middle(self, data, before_data, after_data):
@@ -73,6 +78,27 @@ class LinkedList(object):
             prev_node.next_node = curr_node.next_node
         self.print_list()
 
+    def Delete_by_Node(self, Nd):
+        prev_node = None
+        curr_node = self.head
+
+        found = False
+        while (found is False):
+            if (curr_node is None):
+                print 'Node is not present'
+                return
+            elif curr_node == Nd:
+                found = True
+            else:
+                prev_node = curr_node
+                curr_node = curr_node.next_node
+
+        if prev_node is None:
+            self.head = curr_node.next_node
+        else:
+            prev_node.next_node = curr_node.next_node
+        self.print_list()
+
     # Print Linked List, can be done with __str__ method also
     def print_list(self):
         curr_node, out_text = self.head, 'Head --> '
@@ -103,3 +129,8 @@ if __name__ == '__main__':
     lst.delete(10)
     lst.delete(11111)
     # lst.print_list()
+
+    print '-- Insert by Node --'
+    n = Nd.Node(1)
+    lst.insert_begin_byNode(n)
+    lst.Delete_by_Node(n)
