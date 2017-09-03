@@ -1,7 +1,6 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
+import sys, os
+ROOT_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, ROOT_FOLDER)
 from Node import Node as Nd
 
 #############################
@@ -9,128 +8,141 @@ from Node import Node as Nd
 #############################
 class LinkedList(object):
 
-    def __init__(self, head_node=None):
-        self.head, self.size = head_node, 1
+    # Initialize linked list with given data #
+    def __init__(self, data):
+        self.head, self.size = Nd.Node(data), 1
 
-
-    # Insert Node at begining, taking O(1) to add node
-    def insert_begin(self, data):
-        new_node, new_node.next_node = Nd.Node(data), self.head
-        self.head = new_node
-        self.print_list()
-
-    def insert_begin_byNode(self, Nd):
-        new_node, new_node.next_node = Nd, self.head
-        self.head = new_node
-        self.print_list()
-
-
-    # Insert Node based on a given position
-    def insert_middle(self, data, before_data, after_data):
-        curr_node, new_node = self.head, Nd.Node(data)
-
-        # find the node with before data, worst case O(n)
-        while(curr_node.next_node):
-            nxt_2_curr_node = curr_node.next_node
-
-            # next node with after data, insert in middle
-            if curr_node.data == before_data and nxt_2_curr_node.data == after_data:
-                curr_node.next_node, new_node.next_node = new_node, nxt_2_curr_node
-                break
-            else:
-                curr_node = curr_node.next_node
-        self.print_list()
-
-
-    # Insert Node at end
-    def insert(self, data):
-        new_node = Nd.Node(data)
-
-        if self.head is None:
-            self.head = new_node
-        else:
-            # find the last node, step responsible for O(n)
-            curr_node = self.head
-            while (curr_node.next_node):
-                curr_node = curr_node.next_node
-            curr_node.next_node = new_node
-        self.print_list()
-
-    # Delete by Node
-    def delete(self, data):
-        prev_node = None
-        curr_node = self.head
-
-        found = False
-        while (found is False):
-            if (curr_node is None):
-                print 'Node is not present'
-                return
-            elif curr_node.data == data:
-                found = True
-            else:
-                prev_node = curr_node
-                curr_node = curr_node.next_node
-
-        if prev_node is None:
-            self.head = curr_node.next_node
-        else:
-            prev_node.next_node = curr_node.next_node
-        self.print_list()
-
-    def Delete_by_Node(self, Nd):
-        prev_node = None
-        curr_node = self.head
-
-        found = False
-        while (found is False):
-            if (curr_node is None):
-                print 'Node is not present'
-                return
-            elif curr_node == Nd:
-                found = True
-            else:
-                prev_node = curr_node
-                curr_node = curr_node.next_node
-
-        if prev_node is None:
-            self.head = curr_node.next_node
-        else:
-            prev_node.next_node = curr_node.next_node
-        self.print_list()
-
-    # Print Linked List, can be done with __str__ method also
-    def print_list(self):
+    # Str dundr method #
+    def __str__(self):
         curr_node, out_text = self.head, 'Head --> '
         while(curr_node):
             out_text += str(curr_node.data) + ' --> '
             curr_node = curr_node.next_node
         out_text += '*'
-        print out_text
+        return out_text
 
+    # Insert by position #
+    def insert(self, data, pos=0):
+        # At begining, taking O(1) to add node
+        new_node = Nd.Node(data)
+        if pos == 0:
+            head_node = self.head
+            self.head = new_node
+            new_node.next_node = head_node
+
+        # At middle & end, taking O(n)for searching and O(1) for inserting
+        elif pos > 0:
+            # Find the position
+            tempPointer = self.head
+            for x in range(0, pos-1):
+                if tempPointer.next_node is None: break
+                tempPointer = tempPointer.next_node
+
+            new_node.next_node = tempPointer.next_node
+            tempPointer.next_node = new_node
+
+        self.size += 1
+
+    # Insert at the end of list #
+    def append(self, data):
+        self.insert(data, self.size + 1)
+
+    # Delete by data or node #
+    # This function deletes only the first occurance #
+    # Todo: Unsorted: Scan entire list to delete all nodes with given data
+    # Todo: Sorted: Use binary search to find the node(s) and delete
+    def delete(self, del_item):
+        prev_node = None
+        curr_node = self.head
+
+        found = False
+        while (found is False):
+            if (curr_node is None):
+                print 'Node not found'
+                return
+            elif curr_node.data == del_item or curr_node == del_item:
+                found = True
+            else:
+                prev_node, curr_node = curr_node, curr_node.next_node
+
+        if prev_node is None: self.head = curr_node.next_node
+        else: prev_node.next_node = curr_node.next_node
+        self.size -= 1
+
+    def reverse(self):
+        prev, curr = None, self.head
+        while(curr):
+            nxt = curr.next_node
+            curr.next_node = prev
+            prev = curr
+            curr = nxt
+
+        self.head = prev
+
+    def reverse_recursive(self, curr):
+        if curr.next_node is None:
+            self.head = curr
+            return None
+
+        self.reverse_recursive(curr.next_node)
+        curr.next_node.next_node = curr
+        curr.next_node = None
+
+    # Todo: Implement decorators to print list
 
 #############################
 # USAGE
 #############################
 if __name__ == '__main__':
-    lst = LinkedList()
-    print '-- Insert --'
-    lst.insert(10)                  # 10 --> *
-    lst.insert(20)                  # 10 --> 20 --> *
-    lst.insert(30)                  # 10 --> 20 --> 30 --> *
-    lst.insert(500)                 # 10 --> 20 --> 30 --> 500 --> *
-    lst.insert_middle(15, 10, 20)   # 10 --> 15 --> 20 --> 30 --> 500 --> *
-    lst.insert_middle(25, 20, 30)   # 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
-    lst.insert_begin(2)             # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 500 --> *
-    lst.insert_begin(100)
 
-    print '-- Delete --'
-    lst.insert_begin(10)
-    lst.delete(10)
-    lst.delete(11111)
-    # lst.print_list()
+    print '\n-- Initialize --'
+    lst = LinkedList(10)        # 10 --> *
+    print lst
 
-    print '-- Insert by Node --'
-    n = Nd.Node(1)
-    lst.insert_begin_byNode(n)
-    lst.Delete_by_Node(n)
+    print '\n-- Insert --'
+    lst.append(20)          # 10 --> 20 --> *
+    lst.append(30)          # 10 --> 20 --> 30 --> *
+    lst.insert(15, pos=1) # 10 --> 15 --> 20 --> 30 --> *
+    lst.insert(25, pos=3) # 10 --> 15 --> 20 --> 25 --> 30 --> *
+    lst.insert(2)         # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> *
+    lst.append(100)         # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 100 --> *
+    lst.append(500)         # 2 --> 10 --> 15 --> 20 --> 25 --> 30 --> 100 --> 500 --> *
+    print lst
+
+    print '\n-- Delete --'
+    lst.delete(10)          # 2 --> 15 --> 20 --> 25 --> 30 --> 100 --> 500 --> *
+    lst.delete(11111)       # Node is not present
+    lst.delete(lst.head)    # 15 --> 20 --> 25 --> 30 --> 100 --> 500 --> *
+    print lst
+
+    print '\nSize of List : ' + str(lst.size)
+
+    print '\n-- Reverse --'
+    lst.reverse()
+    print lst
+    lst.reverse_recursive(lst.head)
+    print lst
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################
+# NOTES
+#############################
+#
+# Memory is allocated dynamically.
+# Every node has random address and are linked through pointers.
+# This is more useful when the number of objects to be stored is unknown and unusually large.
+#
+# Arrays on the other hand are limited by size. They are continuous blocks of allocation.
